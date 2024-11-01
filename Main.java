@@ -10,7 +10,7 @@ public class Main {
         int escolha;
 
         do{
-            String menu = "Escolha uma opção:\n"
+            String menu = "AAAAAAAAEscolha uma opção:\n"
                     + "1. Adicionar Tarefa\n"
                     + "2. Listar Tarefas\n"
                     + "3. Remover Tarefa\n"
