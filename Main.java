@@ -1,63 +1,58 @@
-import metodos.ControleTarefas;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<String> tarefas = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        int escolha;
+        ControleTarefas controleTarefas = new ControleTarefas();
 
-        do{
-            String menu = "Escolha uma opção:\n"
-                    + "1. Adicionar Tarefa\n"
-                    + "2. Listar Tarefas\n"
-                    + "3. Remover Tarefa\n"
-                    + "4. Sair";
-            System.out.println(menu);
-            escolha = scanner.nextInt();
-            scanner.nextLine();
+        int opcao;
 
+        do {
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Adicionar Tarefa");
+            System.out.println("2 - Listar Tarefas");
+            System.out.println("3 - Modificar Status de Tarefa");
+            System.out.println("4 - Sair");
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpar o buffer de entrada
 
-            switch (escolha){
+            switch (opcao) {
                 case 1:
                     System.out.println("Digite o nome da tarefa:");
-                    String novaTarefa = scanner.nextLine();
-                    ControleTarefas.adicionarTarefa(tarefas, novaTarefa);
+                    String nome = scanner.nextLine();
+                    System.out.println("Digite a anotação da tarefa:");
+                    String anotacao = scanner.nextLine();
+                    System.out.println("Digite o status da tarefa:");
+                    String status = scanner.nextLine();
+
+                    Tarefa novaTarefa = new Tarefa(nome, anotacao, status);
+                    controleTarefas.adicionarTarefa(novaTarefa);
                     break;
 
                 case 2:
-                    if (tarefas.isEmpty()) {
-                        System.out.println("Nenhuma tarefa encontrada!\n");
-                    } else {
-                        ControleTarefas.listarTarefa(tarefas);
-                    }
+                    controleTarefas.listarTarefas();
                     break;
+
                 case 3:
-                    if (tarefas.isEmpty()) {
-                        System.out.println("A lista de tarefas está vazia! Não há tarefas para remover.\n");
-                    } else {
-                        System.out.println("Qual tarefa deseja remover?");
-                        if (scanner.hasNextInt()) {
-                            int selecao = scanner.nextInt();
-                            scanner.nextLine();
-                            ControleTarefas.removerTarefa(tarefas, selecao);
-                        } else {
-                            System.out.println("Por favor, insira um número válido.\n");
-                            scanner.nextLine();
-                        }
-                    }
+                    System.out.println("Digite o número da tarefa que deseja modificar o status:");
+                    controleTarefas.listarTarefas();
+                    int tarefaIndex = scanner.nextInt();
+                    scanner.nextLine(); // Limpar o buffer de entrada
+                    System.out.println("Digite o novo status da tarefa:");
+                    String novoStatus = scanner.nextLine();
+                    controleTarefas.modificarStatus(tarefaIndex, novoStatus);
                     break;
+
                 case 4:
-                    System.out.println("Saindo... Até logo!");
+                    System.out.println("Saindo...");
                     break;
+
                 default:
-                    System.out.println("Opção inválida! Por favor, selecione uma opção de 1 a 4.\n");
+                    System.out.println("Opção inválida. Tente novamente.");
                     break;
-
-
             }
-        }while(escolha != 4);
+        } while (opcao != 4);
+
+        scanner.close();
     }
 }
